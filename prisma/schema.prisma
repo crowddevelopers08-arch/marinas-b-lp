@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model Submission {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  source    String
+  name      String
+  phone     String
+  concern   String
+  pageUrl   String   @default("")
+  telecrm   String   @default("")
+}
+
+model Payment {
+  id        String   @id
+  createdAt DateTime @default(now())
+  orderId   String
+  amount    Float
+  currency  String   @default("INR")
+  status    String
+  method    String   @default("")
+  name      String   @default("")
+  phone     String   @default("")
+}

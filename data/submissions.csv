@@ -1,0 +1,17 @@
+Timestamp,Source,Name,Phone,Condition,URL,TeleCRM,FormName
+"18/6/2026, 4:52:35 pm",Consultation Modal,rajesh,8574963201,Sleep Apnea,http://localhost:3000/,Not configured
+"18/6/2026, 5:51:11 pm",Bariatric-Form,rajesh,8574963245,Obesity & High BMI,http://localhost:3000/,Not configured
+"22/6/2026, 4:47:11 pm",Bariatric-Form,rajeshtesting,8574963201,Sleep Apnea,http://localhost:3000/,Not configured
+"22/6/2026, 6:05:41 pm",Consultation Modal,rajesh,8574963209,Sleep Apnea,http://localhost:3000/,Not configured
+"22/6/2026, 6:35:38 pm",Consultation Modal - Exited,rajedhs,8574963206,Joint Pain due to Weight,http://localhost:3000/,Not configured
+"22/6/2026, 6:36:23 pm",Consultation Modal - Exited,rajeshtestingw,8574963207,Joint Pain due to Weight,http://localhost:3000/,Not configured
+"22/6/2026, 6:38:20 pm",Consultation Modal - Exited,rajedh,8574963212,Joint Pain due to Weight,http://localhost:3000/,Not configured
+"22/6/2026, 6:41:12 pm",Consultation Modal - Exited,rajesh,8574963241,Sleep Apnea,http://localhost:3000/,Not configured
+"22/6/2026, 6:51:55 pm",Payment-Exited,rajesh,8574963245,Hypertension,http://localhost:3000/,Not configured
+"22/6/2026, 6:53:49 pm",Consultation Modal,rajedh,8574963245,Other,http://localhost:3000/,Not configured
+"23/6/2026, 4:45:56 pm",Payment-Exited,rajedh,8574963245,Type 2 Diabetes Management,http://localhost:3000/,Not configured,Marina Bariatrics
+"23/6/2026, 5:14:53 pm",Consultation Modal,raj,8574963202,Sleep Apnea,http://localhost:3000/,Not configured,Marina Bariatrics
+"23/6/2026, 5:29:25 pm",Payment-Exited,johncy,8574963209,Obesity & High BMI,http://localhost:3000/,Not configured,Marina Bariatrics
+"23/6/2026, 5:30:25 pm",Payment-Exited,johncy5,8574963209,Sleep Apnea,http://localhost:3000/,Not configured,Marina Bariatrics
+"23/6/2026, 6:00:26 pm",Payment-Exited,johncy50,8574963201,Weight Loss Surgery,http://localhost:3000/,Not configured,Marina Bariatrics
+"23/6/2026, 6:32:19 pm",Consultation Modal,last,8574963245,Hypertension,http://localhost:3000/,Not configured,Marina Bariatrics
