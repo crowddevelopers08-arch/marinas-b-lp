@@ -202,7 +202,87 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 .cond-list li::before { content: "◆"; position: absolute; left: 0; color: var(--teal-deep); font-size: .7rem; top: 13px }
 
 /* ---------- 9. Before / After ---------- */
-.ba-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; margin-top: 36px }
+.before-after-section {
+  /* background:
+    linear-gradient(180deg, var(--mist) 0%, #f7ffff 48%, var(--white) 100%); */
+  background: var(--mist);
+  overflow: hidden;
+}
+.ba-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+.ba-photo-card {
+  background: var(--white);
+  border: 1px solid rgba(18, 110, 110, .18);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.ba-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: var(--mist);
+  overflow: hidden;
+}
+.ba-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .35s ease;
+}
+.ba-photo-card:hover .ba-photo-img { transform: scale(1.035) }
+.ba-photo::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(to top, rgba(22, 48, 48, .72), transparent);
+  pointer-events: none;
+}
+.ba-photo-tags {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ba-photo-tags span {
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .9);
+  color: var(--teal-deep);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  padding: 6px 10px;
+  text-transform: uppercase;
+}
+.ba-photo-copy {
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 20px;
+}
+.ba-count {
+  color: var(--teal-deep);
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.ba-photo-copy h3 { font-size: 1.15rem }
+.ba-photo-copy p {
+  color: var(--ink-soft);
+  font-size: .92rem;
+  line-height: 1.55;
+}
+.ba-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; margin-top: 26px }
 .ba-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r); padding: 26px 24px }
 .ba-label { display: inline-block; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .72rem; padding: 6px 14px; border-radius: 100px; margin-bottom: 18px }
 .ba-label.before { background: rgba(210,75,75,.12); color: #c05858; border: 1px solid rgba(210,75,75,.28) }
@@ -490,6 +570,25 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   .split-2 { grid-template-columns: 1fr }
 
   /* Before/after — single col */
+  .ba-photo-grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    margin-top: 26px;
+    margin-inline: -4%;
+    overflow-x: auto;
+    padding: 4px 4% 10px;
+    scroll-padding-inline: 4%;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ba-photo-grid::-webkit-scrollbar { display: none }
+  .ba-photo-card {
+    flex: 0 0 min(82vw, 320px);
+    scroll-snap-align: center;
+  }
+  .ba-photo { aspect-ratio: 4 / 4.6 }
+  .ba-photo-copy { padding: 16px }
   .ba-grid { grid-template-columns: 1fr }
 
   /* Benefits — auto-scroll on mobile */
@@ -583,4 +682,37 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; scroll-behavior: auto !important }
   .symptom-card { opacity: 1; transform: none }
+}
+
+@media (max-width: 767px) {
+  .before-after-section .ba-photo-grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    width: auto;
+    margin: 26px -4vw 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 4vw 12px;
+    scroll-padding-inline: 4vw;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .before-after-section .ba-photo-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .before-after-section .ba-photo-card {
+    flex: 0 0 88vw;
+    width: 88vw;
+    max-width: 340px;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .before-after-section .ba-photo {
+    aspect-ratio: 4 / 5;
+  }
 }

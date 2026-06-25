@@ -3,7 +3,7 @@ import { SectionHeading } from "./Shared";
 
 export default function MistakesSection() {
   return (
-    <section className="mis">
+    <section>
       <div className="wrap">
         <SectionHeading eyebrow="The Biggest Mistake" title="What Most Weight Loss Patients Do Wrong" />
         <p className="mistake-body">Obesity is not a willpower problem. It is a medical condition that often requires medical intervention.</p>

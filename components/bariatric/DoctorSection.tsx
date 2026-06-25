@@ -2,7 +2,7 @@
 
 export default function DoctorSection() {
   return (
-    <section className="doctor">
+    <section className="doctor mis">
       <div className="wrap">
         <div className="doc-grid">
           {/* Desktop photo — left column */}
