@@ -26,7 +26,7 @@ export default function TextTestimonialsSection() {
   return (
     <section>
       <div className="wrap center">
-        <SectionHeading eyebrow="Patient Words" title="What Patients Say After Their Consultation" center />
+        <SectionHeading eyebrow="What Our Patients Say" title="Real Experiences, Genuine Care, Lasting Results" center />
       </div>
 
       {/* Desktop — normal grid */}
