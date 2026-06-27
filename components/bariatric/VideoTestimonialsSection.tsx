@@ -1,18 +1,27 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SectionHeading } from "./Shared";
 
 const videos = [
   { src: "https://res.cloudinary.com/dthj7fakc/video/upload/v1781762970/video1_kaazse.mp4", label: "" },
   { src: "https://res.cloudinary.com/dthj7fakc/video/upload/v1781762972/video2_qtujea.mp4", label: "" },
   { src: "https://res.cloudinary.com/dthj7fakc/video/upload/v1781762972/video3_rpzmq3.mp4", label: "" },
+  // { src: "https://ik.imagekit.io/tpucbav8z/marinias1_squished.mp4", label: "" },
+  // { src: "https://ik.imagekit.io/tpucbav8z/output%201hernia_squished.mp4", label: "" },
 ];
 
 export default function VideoTestimonialsSection() {
   const [active, setActive] = useState(1);
   const prev = () => setActive((i) => (i - 1 + videos.length) % videos.length);
   const next = () => setActive((i) => (i + 1) % videos.length);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setActive((i) => (i + 1) % videos.length);
+    }, 5000);
+    return () => clearInterval(t);
+  }, []);
 
   return (
     <section className="mistakes">
