@@ -5,12 +5,16 @@ export default function HeroSection() {
     <section className="hero">
       <div className="wrap hero-inner">
         <div className="hero-copy">
-          <span className="eyebrow">Important Message for Weight Loss Patients</span>
-          <h1>Watch This Before You Decide What To Do About Your Weight</h1>
-          <p className="lead">Discover why thousands of people continue struggling with obesity, failed diets, and health complications without realising that a permanent, medically proven solution exists.</p>
-          <div className="hero-actions">
-            <BookButton>Book My Consultation - Rs.1500</BookButton>
-            <a className="btn btn-ghost" href="#candidate">Am I a Candidate?</a>
+          <div className="hero-title">
+            <span className="eyebrow">Important Message for Weight Loss Patients</span>
+            <h1>Watch This Before You Decide What To Do About Your Weight</h1>
+          </div>
+          <div className="hero-desc">
+            <p className="lead">Discover why thousands of people continue struggling with obesity, failed diets, and health complications without realising that a permanent, medically proven solution exists.</p>
+            <div className="hero-actions">
+              <BookButton>Book My Consultation - Rs.1500</BookButton>
+              <a className="btn btn-ghost" href="#candidate">Am I a Candidate?</a>
+            </div>
           </div>
         </div>
         <div className="hero-media">
