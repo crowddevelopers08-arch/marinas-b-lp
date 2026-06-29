@@ -15,7 +15,6 @@ export default function PrivacyPolicyPage() {
           <div className="mb-6 text-center">
             <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[var(--vk-pink)]" />
             <h1 className="font-serif text-3xl font-black text-[var(--vk-green-dark)] sm:text-4xl">Privacy Policy</h1>
-            <p className="mt-2 text-sm text-gray-500">Last updated: June 2025</p>
           </div>
 
           <div className="space-y-6 text-sm leading-7 text-gray-600">
