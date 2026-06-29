@@ -1,6 +1,9 @@
 ﻿import Image from "next/image";
 import { BookButton } from "./Shared";
 
+const PHONE_NUMBER = "+91 98840 00171";
+const PHONE_HREF = "tel:+919884000171";
+
 export default function Header() {
   return (
     <header className="topbar">
@@ -9,7 +12,12 @@ export default function Header() {
           <Image src="/Marina-logo.png" alt="Marina's Clinic" width={300} height={200} priority />
         </div>
         <span className="clinic-tag">Bariatric &amp; Metabolic Surgery</span>
-        <BookButton className="btn btn-ghost">Book Consultation</BookButton>
+        <div className="header-actions">
+          <a className="header-phone" href={PHONE_HREF} aria-label={`Call Marina's Clinic at ${PHONE_NUMBER}`}>
+            {PHONE_NUMBER}
+          </a>
+          <BookButton className="btn btn-ghost">Book Consultation</BookButton>
+        </div>
       </div>
     </header>
   );

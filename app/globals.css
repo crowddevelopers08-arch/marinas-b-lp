@@ -97,6 +97,21 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 .logo-chip { background: var(--white); border-radius: 14px; padding: 10px 16px; display: inline-flex }
 .logo-chip img { height: 46px; width: auto }
 .topbar .clinic-tag { color: var(--ink-soft); font-size: .85rem; letter-spacing: .04em; font-weight: 800 }
+.header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center }
+.header-phone {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 12px 18px; border-radius: 100px;
+  border: 1px solid transparent; color: var(--teal-deep);
+  font-family: var(--sans); font-size: 1rem; font-weight: 800; letter-spacing: .01em;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+.header-phone:hover,
+.header-phone:focus-visible {
+  background: var(--white); color: var(--teal-press);
+  border-color: rgba(18, 110, 110, .32);
+  transform: translateY(-2px);
+  outline: none;
+}
 
 /* ---------- 2. Hero ---------- */
 .hero {
@@ -158,7 +173,7 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
   background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden;
 }
 .meta-item { background: var(--white); padding: 20px 18px; text-align: center }
-.meta-item .k { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px }
+.meta-item .k { font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px }
 .meta-item .v { font-family: var(--serif); color: var(--ink); font-size: 1.25rem; font-weight: 700 }
 .meta-item .v.gold { color: var(--teal-deep) }
 
@@ -336,7 +351,8 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 .vtest-carousel-wrap {
   display: flex;
   align-items: center;
-  gap: 18px;
+  justify-content: center;
+  gap: 20px;
   width: min(100% - 40px, 1080px);
   margin: 36px auto 0;
 }
@@ -344,21 +360,22 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 20px;
   flex: 1;
   min-width: 0;
   margin: 0;
 }
 .vtest-slide {
   display: block;
-  flex: 1 1 0;
-  max-width: 180px;
+  flex: 0 0 clamp(132px, 15vw, 180px);
   opacity: .74;
   transform: scale(.94);
+  transform-origin: center;
   cursor: pointer;
-  transition: opacity .3s ease, transform .3s ease;
+  transition: flex-basis .3s ease, opacity .3s ease, transform .3s ease;
 }
 .vtest-slide--active {
+  flex-basis: clamp(170px, 18vw, 220px);
   opacity: 1;
   transform: scale(1);
 }
@@ -393,6 +410,81 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
   padding: 28px 14px 14px; text-align: center;
   background: linear-gradient(to top, rgba(22,48,48,.72), transparent);
   color: var(--white); font-weight: 600; font-size: .88rem; pointer-events: none;
+}
+
+@media (min-width: 641px) {
+  .vtest-carousel-wrap {
+    width: min(100% - 32px, 920px);
+    gap: clamp(14px, 2vw, 26px);
+    margin-top: 42px;
+    min-height: clamp(338px, 42.7vw, 462px);
+  }
+
+  .vtest-carousel {
+    flex: 0 1 auto;
+    gap: clamp(14px, 2vw, 24px);
+    justify-content: center;
+  }
+
+  .vtest-slide {
+    flex: 0 0 clamp(120px, 14vw, 150px);
+    align-self: center;
+    opacity: .58;
+    transform: scale(.9);
+  }
+
+  .vtest-slide:hover {
+    opacity: .82;
+    transform: scale(.94);
+  }
+
+  .vtest-slide--active {
+    flex-basis: clamp(190px, 24vw, 260px);
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .vtest-slide--active:hover {
+    transform: scale(1);
+  }
+
+  .vtest {
+    border-radius: 16px;
+    border-color: rgba(18, 110, 110, .2);
+    box-shadow: 0 18px 42px -28px rgba(18, 110, 110, .55);
+    transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  }
+
+  .vtest-slide--active .vtest {
+    border-color: rgba(18, 110, 110, .42);
+    box-shadow: 0 24px 58px -30px rgba(18, 110, 110, .7);
+  }
+
+  .vtest-carousel--changing .vtest-slide {
+    animation: vtest-smooth-in .32s ease both;
+  }
+
+  .vtest-carousel--changing .vtest-slide--active {
+    animation: vtest-center-in .32s ease both;
+  }
+
+  .vtest-arrow {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+    font-size: 2.2rem;
+    box-shadow: 0 12px 30px -22px rgba(18, 110, 110, .7);
+  }
+}
+
+@keyframes vtest-smooth-in {
+  from { opacity: .2; transform: scale(.86) }
+  to { opacity: .58; transform: scale(.9) }
+}
+
+@keyframes vtest-center-in {
+  from { opacity: .35; transform: scale(.94) }
+  to { opacity: 1; transform: scale(1) }
 }
 
 /* ---------- 13. Text testimonials ---------- */
@@ -466,10 +558,30 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 
 /* ---------- 17. Footer ---------- */
 footer { border-top: 1px solid var(--line); padding: 46px 0 36px; text-align: center; background: var(--white) }
+.footer-grid { display: grid; gap: 28px; align-items: start }
 footer .logo-chip { margin: 0 auto 18px }
+.footer-text-logo { display: inline-flex; flex-direction: column; line-height: 1; margin-bottom: 18px; color: var(--ink) }
+.footer-logo-main { font-family: var(--serif); font-size: 1.45rem; font-weight: 800 }
+.footer-logo-sub { color: var(--teal-deep); font-size: .78rem; font-weight: 800; letter-spacing: .18em; margin-top: 4px; text-transform: uppercase }
 footer .f-name { font-family: var(--serif); color: var(--ink); font-size: 1.2rem; margin-bottom: 4px }
 footer .f-role { color: var(--teal-deep); font-size: .85rem; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 22px }
+footer .f-contact-label { color: var(--teal-deep); font-size: .72rem; font-weight: 800; letter-spacing: .16em; margin-bottom: 10px; text-transform: uppercase }
+footer .f-address { color: var(--ink); font-size: .92rem; font-style: normal; font-weight: 600; line-height: 1.6; margin: 0 auto 12px; max-width: 34ch }
+footer .f-phone { color: var(--teal-deep); display: inline-flex; font-size: .95rem; font-weight: 800 }
 footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch; margin: 0 auto; line-height: 1.7 }
+
+@media (min-width: 641px) {
+  footer { text-align: left }
+  .footer-grid { grid-template-columns: minmax(0, 1fr) minmax(240px, 320px); gap: 48px }
+  footer .logo-chip { margin-left: 0; margin-right: 0 }
+  footer .disclaimer { margin-left: 0; margin-right: 0 }
+  .footer-contact {
+    border-left: 1px solid var(--line);
+    padding-left: 30px;
+    padding-top: 10px;
+  }
+  footer .f-address { margin-left: 0; margin-right: 0 }
+}
 
 /* ---------- 18. Urgency bar ---------- */
 .urgency {
@@ -576,6 +688,11 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
 
   /* Topbar */
   .topbar .wrap { justify-content: center }
+  .header-actions { width: 100%; flex-wrap: nowrap; gap: 8px }
+  .header-actions .btn,
+  .header-phone { justify-content: center; width: auto; white-space: nowrap }
+  .header-actions .btn { padding: 11px 14px; font-size: .78rem }
+  .header-phone { min-height: 40px; padding: 9px 8px; font-size: .78rem }
   .logo-chip.logo-image img { height: 64px; max-width: min(220px, 72vw) }
 .book .btn { font-size: 0.78rem; padding: 10px 12px; margin-top: 6px }
   /* Hero — mobile: title → video → description */
@@ -656,8 +773,9 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   .vtest-carousel-wrap {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
-    width: 88%;
+    width: min(88%, 320px);
     margin: 28px auto 0;
   }
   .vtest-carousel {
@@ -672,7 +790,9 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   }
   .vtest-slide--active {
     display: block;
+    flex-basis: auto;
     width: 100%;
+    transform: none;
   }
   .vtest-slide--active .vtest {
     width: 100%;
@@ -720,6 +840,27 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   .book .btn { width: 100%; justify-content: center }
   .urgency .btn { padding: 10px 18px; font-size: .85rem }
   .final .btn { width: min(300px, 100%); justify-content: center }
+  .topbar .header-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .topbar .header-phone,
+  .topbar .header-actions .btn {
+    flex: 0 1 auto;
+    width: auto;
+    white-space: nowrap;
+  }
+  .topbar .header-phone {
+    min-height: 38px;
+    padding: 8px 7px;
+    font-size: .72rem;
+  }
+  .topbar .header-actions .btn {
+    padding: 9px 11px;
+    font-size: .72rem;
+  }
 
   /* Urgency bar */
   .urgency .ut { display: none }
