@@ -18,7 +18,7 @@ export const conditions = [
   {
     title: "Obesity",
     items: [
-      "BMI >= 32.5 with comorbidities or BMI >= 37.5",
+      "BMI >= 27.9 with comorbidities or BMI >= 37.5",
       "Resistant to diet and lifestyle changes",
       "Associated with diabetes, BP, joint pain",
       "Progressive condition that worsens without treatment",
