@@ -706,15 +706,44 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   /* body { padding-bottom: 72px } */
 
   /* Topbar */
-  .topbar .wrap { justify-content: center }
-  .header-actions { width: 100%; flex-wrap: nowrap; gap: 8px }
+  .topbar .wrap {
+    justify-content: center;
+    column-gap: 10px;
+    row-gap: 8px;
+  }
+  .topbar .clinic-tag {
+    flex: 0 1 auto;
+    max-width: calc(100% - 136px);
+    font-size: clamp(.62rem, 2.6vw, .76rem);
+    line-height: 1.2;
+    letter-spacing: .02em;
+    white-space: normal;
+  }
+  .header-actions {
+    flex: 0 0 100%;
+    width: min(100%, 360px);
+    max-width: 360px;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
   .header-actions .btn,
-  .header-phone { justify-content: center; width: auto; white-space: nowrap }
-  .header-actions .btn { padding: 11px 14px; font-size: .78rem }
-  .header-phone { min-height: 40px; padding: 0; font-size: .78rem }
+  .header-phone {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 40px;
+    justify-content: center;
+    width: auto;
+    padding: 0 8px;
+    white-space: nowrap;
+    font-size: clamp(.68rem, 2.8vw, .78rem);
+    letter-spacing: 0;
+  }
   .header-phone:hover,
-  .header-phone:focus-visible { padding: 9px 8px }
-  .logo-chip.logo-image img { height: 64px; max-width: min(220px, 72vw) }
+  .header-phone:focus-visible { padding: 0 8px }
+  .logo-chip.logo-image {
+    flex: 0 0 auto;
+  }
+  .logo-chip.logo-image img { height: 56px; max-width: min(126px, 38vw) }
 .book .btn { font-size: 0.78rem; padding: 10px 12px; margin-top: 6px }
   /* Hero — mobile: title → video → description */
   .hero-inner { display: flex; flex-direction: column; gap: 20px }
@@ -872,29 +901,33 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   .final .btn { width: min(300px, 100%); justify-content: center }
   .topbar .header-actions {
     display: flex;
+    flex: 0 0 100%;
     flex-wrap: nowrap;
     justify-content: center;
-    width: 100%;
+    width: min(100%, 360px);
+    max-width: 360px;
+    gap: 8px;
   }
   .topbar .header-phone,
   .topbar .header-actions .btn {
     flex: 1 1 0;
     min-width: 0;
+    min-height: 40px;
     width: auto;
+    padding: 0 8px;
     white-space: nowrap;
+    font-size: clamp(.68rem, 2.8vw, .78rem);
+    letter-spacing: 0;
   }
   .topbar .header-phone {
-    min-height: 38px;
-    padding: 0;
-    font-size: .72rem;
+    min-height: 40px;
   }
   .topbar .header-phone:hover,
   .topbar .header-phone:focus-visible {
-    padding: 8px 7px;
+    padding: 0 8px;
   }
   .topbar .header-actions .btn {
-    padding: 9px 11px;
-    font-size: .72rem;
+    padding: 0 8px;
   }
 
   /* Urgency bar */
