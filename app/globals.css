@@ -100,14 +100,15 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center }
 .header-phone {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 48px; padding: 12px 18px; border-radius: 100px;
-  border: 1px solid transparent; color: var(--teal-deep);
+  min-height: 48px; padding: 0; border-radius: 100px;
+  border: 1px solid transparent; background: transparent; color: var(--teal-deep);
   font-family: var(--sans); font-size: 1rem; font-weight: 800; letter-spacing: .01em;
-  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease, padding .2s ease;
 }
 .header-phone:hover,
 .header-phone:focus-visible {
-  background: var(--white); color: var(--teal-press);
+  padding: 12px 18px;
+  background: var(--mist); color: var(--teal-press);
   border-color: rgba(18, 110, 110, .32);
   transform: translateY(-2px);
   outline: none;
@@ -361,26 +362,21 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
   align-items: center;
   justify-content: center;
   gap: 20px;
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
   margin: 0;
 }
 .vtest-slide {
   display: block;
-  flex: 0 0 clamp(132px, 15vw, 180px);
-  opacity: .74;
-  transform: scale(.94);
+  flex: 0 1 clamp(180px, 20vw, 240px);
+  opacity: 1;
+  transform: none;
   transform-origin: center;
-  cursor: pointer;
+  cursor: default;
   transition: flex-basis .3s ease, opacity .3s ease, transform .3s ease;
 }
-.vtest-slide--active {
-  flex-basis: clamp(170px, 18vw, 220px);
-  opacity: 1;
-  transform: scale(1);
-}
 .vtest-arrow {
-  display: grid;
+  display: none;
   place-items: center;
   width: 42px;
   height: 42px;
@@ -427,25 +423,14 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
   }
 
   .vtest-slide {
-    flex: 0 0 clamp(120px, 14vw, 150px);
+    flex: 0 1 clamp(190px, 24vw, 260px);
     align-self: center;
-    opacity: .58;
-    transform: scale(.9);
+    opacity: 1;
+    transform: none;
   }
 
   .vtest-slide:hover {
-    opacity: .82;
-    transform: scale(.94);
-  }
-
-  .vtest-slide--active {
-    flex-basis: clamp(190px, 24vw, 260px);
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .vtest-slide--active:hover {
-    transform: scale(1);
+    transform: translateY(-2px);
   }
 
   .vtest {
@@ -455,25 +440,59 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
     transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
   }
 
-  .vtest-slide--active .vtest {
-    border-color: rgba(18, 110, 110, .42);
-    box-shadow: 0 24px 58px -30px rgba(18, 110, 110, .7);
-  }
-
-  .vtest-carousel--changing .vtest-slide {
-    animation: vtest-smooth-in .32s ease both;
-  }
-
-  .vtest-carousel--changing .vtest-slide--active {
-    animation: vtest-center-in .32s ease both;
-  }
-
   .vtest-arrow {
     width: 48px;
     height: 48px;
     flex-basis: 48px;
     font-size: 2.2rem;
     box-shadow: 0 12px 30px -22px rgba(18, 110, 110, .7);
+  }
+}
+
+@media (max-width: 900px) {
+  .vtest-carousel-wrap {
+    width: min(94%, 380px);
+    gap: 10px;
+    align-items: center;
+  }
+
+  .vtest-carousel {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .vtest-slide {
+    display: none;
+    flex-basis: auto;
+    width: 100%;
+    transform: none;
+  }
+
+  .vtest-slide--active {
+    display: block;
+  }
+
+  .vtest-slide--active .vtest {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .vtest-arrow {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    align-self: center;
+    padding: 0;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .vtest-dots {
+    display: flex;
   }
 }
 
@@ -692,7 +711,9 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   .header-actions .btn,
   .header-phone { justify-content: center; width: auto; white-space: nowrap }
   .header-actions .btn { padding: 11px 14px; font-size: .78rem }
-  .header-phone { min-height: 40px; padding: 9px 8px; font-size: .78rem }
+  .header-phone { min-height: 40px; padding: 0; font-size: .78rem }
+  .header-phone:hover,
+  .header-phone:focus-visible { padding: 9px 8px }
   .logo-chip.logo-image img { height: 64px; max-width: min(220px, 72vw) }
 .book .btn { font-size: 0.78rem; padding: 10px 12px; margin-top: 6px }
   /* Hero — mobile: title → video → description */
@@ -774,8 +795,8 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    width: min(88%, 320px);
+    gap: 10px;
+    width: min(94%, 380px);
     margin: 28px auto 0;
   }
   .vtest-carousel {
@@ -787,19 +808,28 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   }
   .vtest-slide {
     display: none;
-  }
-  .vtest-slide--active {
-    display: block;
     flex-basis: auto;
     width: 100%;
     transform: none;
+  }
+  .vtest-slide--active {
+    display: block;
   }
   .vtest-slide--active .vtest {
     width: 100%;
     max-width: 280px;
     margin: 0 auto;
   }
-  .vtest-arrow { display: none }
+  .vtest-arrow {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    align-self: center;
+    padding: 0;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
   .vtest-dots {
     display: flex;
     justify-content: center;
@@ -848,14 +878,19 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   }
   .topbar .header-phone,
   .topbar .header-actions .btn {
-    flex: 0 1 auto;
+    flex: 1 1 0;
+    min-width: 0;
     width: auto;
     white-space: nowrap;
   }
   .topbar .header-phone {
     min-height: 38px;
-    padding: 8px 7px;
+    padding: 0;
     font-size: .72rem;
+  }
+  .topbar .header-phone:hover,
+  .topbar .header-phone:focus-visible {
+    padding: 8px 7px;
   }
   .topbar .header-actions .btn {
     padding: 9px 11px;

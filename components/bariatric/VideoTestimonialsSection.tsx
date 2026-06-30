@@ -12,52 +12,40 @@ const videos = [
 ];
 
 export default function VideoTestimonialsSection() {
-  const [active, setActive] = useState(1);
-  const [isAutoPaused, setIsAutoPaused] = useState(false);
-  const [isChanging, setIsChanging] = useState(false);
+  const [active, setActive] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const visibleVideoIndexes = [
-    (active - 1 + videos.length) % videos.length,
-    active,
-    (active + 1) % videos.length,
-  ];
+
+  const stopVideo = (video: HTMLVideoElement | null) => {
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
+  };
+
+  const stopOtherVideos = (activeIndex: number) => {
+    videoRefs.current.forEach((video, index) => {
+      if (!video || index === activeIndex) return;
+      stopVideo(video);
+    });
+  };
+
+  const selectVideo = (index: number) => {
+    videoRefs.current.forEach(stopVideo);
+    setActive(index);
+  };
 
   const prev = () => {
     selectVideo((active - 1 + videos.length) % videos.length);
   };
+
   const next = () => {
     selectVideo((active + 1) % videos.length);
   };
-  const selectVideo = (index: number) => {
-    if (index === active) return;
-    setIsChanging(true);
-    setIsAutoPaused(false);
-    setActive(index);
-  };
 
   useEffect(() => {
-    if (isAutoPaused) return;
-
-    const t = setInterval(() => {
-      setIsChanging(true);
-      setActive((i) => (i + 1) % videos.length);
-    }, 5000);
-    return () => clearInterval(t);
-  }, [isAutoPaused]);
-
-  useEffect(() => {
-    videoRefs.current.forEach((video, index) => {
-      if (!video || index === active) return;
-      video.pause();
-      video.currentTime = 0;
-    });
-  }, [active]);
-
-  useEffect(() => {
-    if (!isChanging) return;
-    const t = setTimeout(() => setIsChanging(false), 320);
-    return () => clearTimeout(t);
-  }, [isChanging, active]);
+    return () => {
+      videoRefs.current.forEach((video) => video?.pause());
+    };
+  }, []);
 
   return (
     <section className="mistakes">
@@ -65,50 +53,37 @@ export default function VideoTestimonialsSection() {
         <SectionHeading eyebrow="What Doctor Say's" title="Stories From Those Who Chose Change" center />
       </div>
       <div className="vtest-carousel-wrap">
-        <button className="vtest-arrow" onClick={prev} aria-label="Previous">&#8249;</button>
-        <div className={`vtest-carousel${isChanging ? " vtest-carousel--changing" : ""}`}>
-          {visibleVideoIndexes.map((i) => {
-            const { src, label } = videos[i];
-
-            return (
-            <div
-              key={src}
-              className={`vtest-slide${i === active ? " vtest-slide--active" : ""}`}
-              onClick={() => {
-                selectVideo(i);
-              }}
-            >
+        <button className="vtest-arrow" onClick={prev} aria-label="Previous video">&#8249;</button>
+        <div className="vtest-carousel">
+          {videos.map(({ src, label }, i) => (
+            <div key={src} className={`vtest-slide${i === active ? " vtest-slide--active" : ""}`}>
               <div className="vtest">
                 <video
                   ref={(element) => {
                     videoRefs.current[i] = element;
                   }}
                   src={src}
-                  controls={i === active}
+                  controls
                   playsInline
                   preload="metadata"
                   className="vtest-video"
-                  onClick={(event) => event.stopPropagation()}
-                  onPlay={() => setIsAutoPaused(true)}
-                  onPlaying={() => setIsAutoPaused(true)}
+                  onPlay={() => stopOtherVideos(i)}
+                  onPlaying={() => stopOtherVideos(i)}
                 />
-                <div className="video-label">{label}</div>
+                {label ? <div className="video-label">{label}</div> : null}
               </div>
             </div>
-            );
-          })}
+          ))}
         </div>
-        <button className="vtest-arrow" onClick={next} aria-label="Next">&#8250;</button>
+        <button className="vtest-arrow" onClick={next} aria-label="Next video">&#8250;</button>
       </div>
       <div className="vtest-dots">
         {videos.map((_, i) => (
           <button
             key={i}
             className={`vtest-dot${i === active ? " vtest-dot--active" : ""}`}
-            onClick={() => {
-              selectVideo(i);
-            }}
-            aria-label={`Go to story ${i + 1}`}
+            onClick={() => selectVideo(i)}
+            aria-label={`Show video ${i + 1}`}
           />
         ))}
       </div>
