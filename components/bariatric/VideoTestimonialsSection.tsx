@@ -87,6 +87,16 @@ export default function VideoTestimonialsSection() {
           />
         ))}
       </div>
+      <div className="vtest-full-video">
+        <p>Want to watch more complete patient videos and doctor updates?</p>
+        <a
+          href="https://www.instagram.com/dr.preethimrinalini?igsh=YWkzdmlsc3l0aWF5"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View full videos on Instagram
+        </a>
+      </div>
     </section>
   );
 }
