@@ -50,7 +50,7 @@ export default function VideoTestimonialsSection() {
   return (
     <section className="mistakes">
       <div className="wrap center">
-        <SectionHeading eyebrow="What Doctor Say's" title="Stories From Those Who Chose Change" center />
+        <SectionHeading eyebrow="What Doctor Say's" title="Quick videos. Clear answers. Better decisions." center />
       </div>
       <div className="vtest-carousel-wrap">
         <button className="vtest-arrow" onClick={prev} aria-label="Previous video">&#8249;</button>
