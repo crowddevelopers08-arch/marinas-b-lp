@@ -125,7 +125,29 @@ function isTelecrmConfirmed(data: unknown) {
   if (record.leadId || record.id || record.LeadID) return true;
 
   const status = String(record.status || '').toLowerCase();
-  return status === 'created' || status === 'updated' || status === 'success';
+  const result = String(record.result || '').toLowerCase();
+  return (
+    status === 'created' ||
+    status === 'updated' ||
+    status === 'success' ||
+    result === 'accepted' ||
+    result === 'success'
+  );
+}
+
+function telecrmValue(value: string, fallback = 'Not specified') {
+  return value || fallback;
+}
+
+function getTelecrmDetails(body: SubmissionBody, phone: string) {
+  return [
+    ['Form Name', telecrmValue(body.formName)],
+    ['Name', telecrmValue(body.name, 'Not provided')],
+    ['Phone', telecrmValue(phone, 'Not provided')],
+    ['Source', telecrmValue(body.source || 'Website')],
+    ['URL', telecrmValue(body.pageUrl)],
+    ['Concern', telecrmValue(body.concern)],
+  ].map(([key, value]) => `${key}: ${value}`).join(' | ');
 }
 
 async function pushToTeleCRM(body: SubmissionBody): Promise<TelecrmResponse | null> {
@@ -145,9 +167,13 @@ async function pushToTeleCRM(body: SubmissionBody): Promise<TelecrmResponse | nu
       name: body.name,
     },
     actions: [
+      { type: 'SYSTEM_NOTE', text: `Form Name: ${telecrmValue(body.formName)}` },
+      { type: 'SYSTEM_NOTE', text: `Name: ${telecrmValue(body.name, 'Not provided')}` },
+      { type: 'SYSTEM_NOTE', text: `Phone: ${telecrmValue(phone, 'Not provided')}` },
       { type: 'SYSTEM_NOTE', text: `Source: ${body.source || 'Website'}` },
       { type: 'SYSTEM_NOTE', text: `URL: ${body.pageUrl || 'Not specified'}` },
-      { type: 'SYSTEM_NOTE', text: `Condition: ${body.concern || 'Not specified'}` },
+      { type: 'SYSTEM_NOTE', text: `Concern: ${body.concern || 'Not specified'}` },
+      { type: 'SYSTEM_NOTE', text: `Details: ${getTelecrmDetails(body, phone)}` },
     ],
   };
 

@@ -53,9 +53,14 @@ export default function BookingModal() {
   const [form, setForm] = useState({ name: "", phone: "", concern: "" });
   const [status, setStatus] = useState<Status>("idle");
   const dialogRef = useRef<HTMLDivElement>(null);
+  const leadSubmittedRef = useRef(false);
 
   useEffect(() => {
-    const show = () => { setOpen(true); setStatus("idle"); };
+    const show = () => {
+      leadSubmittedRef.current = false;
+      setOpen(true);
+      setStatus("idle");
+    };
     window.addEventListener("open-booking-modal", show);
     return () => window.removeEventListener("open-booking-modal", show);
   }, []);
@@ -71,11 +76,34 @@ export default function BookingModal() {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
+  const submitLead = async () => {
+    if (leadSubmittedRef.current) return;
+
+    const res = await fetch("/api/submissions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        source: "Consultation Modal",
+        formName: FORM_NAME,
+        name: form.name,
+        phone: form.phone,
+        concern: form.concern,
+        pageUrl: window.location.href,
+      }),
+    });
+
+    if (!res.ok) throw new Error("Lead submission failed");
+    leadSubmittedRef.current = true;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
 
     try {
+      // Capture the lead before payment starts so checkout issues do not lose it.
+      await submitLead();
+
       // 1. Load Razorpay script
       const loaded = await loadRazorpayScript();
       if (!loaded) throw new Error("Razorpay failed to load");
@@ -102,18 +130,6 @@ export default function BookingModal() {
         theme: { color: "#126e6e" },
         modal: {
           ondismiss: async () => {
-            await fetch("/api/submissions", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                source: "Payment-Exited",
-                formName: FORM_NAME,
-                name: form.name,
-                phone: form.phone,
-                concern: form.concern,
-                pageUrl: window.location.href,
-              }),
-            });
             router.push("/thank-you");
           },
         },
@@ -132,21 +148,7 @@ export default function BookingModal() {
           const verified = await verifyRes.json();
           if (!verified.success) { setStatus("error"); return; }
 
-          // 5. Save submission
-          await fetch("/api/submissions", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              source: "Consultation Modal",
-              formName: FORM_NAME,
-              name: form.name,
-              phone: form.phone,
-              concern: form.concern,
-              pageUrl: window.location.href,
-            }),
-          });
-
-          // 6. Redirect to thank-you
+          // 5. Redirect to thank-you
           router.push("/thank-you");
         },
       });
