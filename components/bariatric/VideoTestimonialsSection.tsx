@@ -4,11 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { SectionHeading } from "./Shared";
 
 const videos = [
-  { src: "https://res.cloudinary.com/dthj7fakc/video/upload/v1781762970/video1_kaazse.mp4", label: "" },
-  // { src: "https://res.cloudinary.com/dthj7fakc/video/upload/v1781762972/video2_qtujea.mp4", label: "" },
-  { src: "https://res.cloudinary.com/dthj7fakc/video/upload/v1781762972/video3_rpzmq3.mp4", label: "" },
-  // { src: "https://ik.imagekit.io/tpucbav8z/marinias1_squished.mp4", label: "" },
-  // { src: "https://ik.imagekit.io/tpucbav8z/output%201hernia_squished.mp4", label: "" },
+  { src: "/reel-1.mp4", label: "" },
+  { src: "/reel-2.mp4", label: "" },
 ];
 
 export default function VideoTestimonialsSection() {
@@ -31,6 +28,7 @@ export default function VideoTestimonialsSection() {
   const selectVideo = (index: number) => {
     videoRefs.current.forEach(stopVideo);
     setActive(index);
+    videoRefs.current[index]?.play().catch(() => {});
   };
 
   const prev = () => {
@@ -64,11 +62,16 @@ export default function VideoTestimonialsSection() {
                   }}
                   src={src}
                   controls
+                  autoPlay
+                  muted
+                  loop
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                   className="vtest-video"
-                  onPlay={() => stopOtherVideos(i)}
-                  onPlaying={() => stopOtherVideos(i)}
+                  onVolumeChange={(e) => {
+                    // When the viewer unmutes one video, stop the others.
+                    if (!e.currentTarget.muted) stopOtherVideos(i);
+                  }}
                 />
                 {label ? <div className="video-label">{label}</div> : null}
               </div>

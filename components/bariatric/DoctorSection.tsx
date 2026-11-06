@@ -1,4 +1,4 @@
-﻿const DOC_IMG = "https://res.cloudinary.com/dthj7fakc/image/upload/v1781681953/dr-preethi-mrinalini_wmgdmk.webp";
+﻿const DOC_IMG = "/doctor-1.png";
 
 export default function DoctorSection() {
   return (
@@ -9,7 +9,7 @@ export default function DoctorSection() {
           <div className="doc-photo doc-photo--desktop">
             <img src={DOC_IMG} alt="Dr. Preethi Mrinalini" />
           </div>
-          <div>
+          <div className="doc-content">
             <h2 className="doc-name">Dr.Preethi Mrinalini</h2>
             <span className="doc-role">Bariatric &amp; Metabolic Surgeon</span>
             {/* Mobile photo — between role and bio */}

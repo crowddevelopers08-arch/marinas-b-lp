@@ -4,17 +4,17 @@ import { SectionHeading } from "./Shared";
 
 const transformations = [
   {
-    image: "https://res.cloudinary.com/daclbrdse/image/upload/v1782805703/2_nbkgnk.png",
+    image: "/before1.png",
     name: "Patient Transformation",
     result: "Mobility, confidence, and daily energy improved",
   },
   {
-    image: "https://res.cloudinary.com/daclbrdse/image/upload/v1782805703/1_psrsbj.png",
+    image: "/before2.png",
     name: "Weight Loss Journey",
     result: "Visible change with specialist-led medical support",
   },
   {
-    image: "https://res.cloudinary.com/daclbrdse/image/upload/v1782805703/3_ilod5l.png",
+    image: "/before3.png",
     name: "Life After Treatment",
     result: "Better routine, healthier habits, renewed confidence",
   },

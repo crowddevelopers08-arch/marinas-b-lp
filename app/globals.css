@@ -71,7 +71,7 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
   display: inline-flex; align-items: center; gap: 10px; cursor: pointer; border: none;
   font-family: var(--sans); font-weight: 700; font-size: 1rem; letter-spacing: .01em;
   background: var(--teal-deep); color: var(--white);
-  padding: 16px 30px; border-radius: 100px;
+  padding: 11px 24px; border-radius: 100px;
   transition: background .2s ease, transform .2s ease;
 }
 .btn:hover { background: var(--teal-press); transform: translateY(-2px) }
@@ -90,7 +90,7 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 
 /* ---------- Header / logo ---------- */
 .topbar {
-  padding: 12px 0; background: rgba(255,255,255,.96);
+  padding: 6px 0; background: rgba(255,255,255,.96);
   border-bottom: 1px solid var(--line-soft); backdrop-filter: blur(10px);
 }
 .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap }
@@ -314,11 +314,14 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 
 /* ---------- 10. Doctor ---------- */
 /* .doctor { background: var(--mist) } */
-.doc-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 42px; align-items: center }
+.doc-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 42px; align-items: stretch }
+.doc-content { display: flex; flex-direction: column; justify-content: center }
 .doc-photo {
   aspect-ratio: 4/5; border-radius: var(--r);
   background: var(--mist); position: relative; overflow: hidden;
 }
+.doc-photo--desktop { aspect-ratio: auto; min-height: 420px }
+.doc-photo--desktop img { position: absolute; inset: 0 }
 .doc-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block }
 .doc-photo--mobile { display: none }
 .doc-name { font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin-bottom: 6px }
@@ -581,7 +584,7 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 }
 .fee { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 2.8rem); color: var(--teal-deep); font-weight: 800; line-height: 1 }
 .fee-label { color: var(--ink-soft); font-size: .85rem; letter-spacing: .02em; line-height: 1.5 }
-.book .btn { font-size: 1rem; padding: 14px 22px; margin-top: 6px }
+.book .btn { font-size: .95rem; padding: 10px 20px; margin-top: 4px; align-self: flex-start }
 .consult-check { list-style: none; flex: 1; display: grid; gap: 10px; align-content: start }
 .consult-check li { display: flex; gap: 12px; color: var(--ink-soft); align-items: flex-start }
 .consult-check .tick { color: var(--teal-deep); font-weight: 800; flex: none; margin-top: 2px }
@@ -615,9 +618,7 @@ section { padding: clamp(22px, 4vw, 22px) 0; position: relative }
 footer { border-top: 1px solid var(--line); padding: 46px 0 36px; text-align: center; background: var(--white) }
 .footer-grid { display: grid; gap: 28px; align-items: start }
 footer .logo-chip { margin: 0 auto 18px }
-.footer-text-logo { display: inline-flex; flex-direction: column; line-height: 1; margin-bottom: 18px; color: var(--ink) }
-.footer-logo-main { font-family: var(--serif); font-size: 1.45rem; font-weight: 800 }
-.footer-logo-sub { color: var(--teal-deep); font-size: .78rem; font-weight: 800; letter-spacing: .18em; margin-top: 4px; text-transform: uppercase }
+.footer-logo { display: block; width: auto; height: 56px; margin-bottom: 18px }
 footer .f-name { font-family: var(--serif); color: var(--ink); font-size: 1.2rem; margin-bottom: 4px }
 footer .f-role { color: var(--teal-deep); font-size: .85rem; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 22px }
 footer .f-contact-label { color: var(--teal-deep); font-size: .72rem; font-weight: 800; letter-spacing: .16em; margin-bottom: 10px; text-transform: uppercase }
@@ -642,19 +643,19 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
 .urgency {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
   background: rgba(255,255,255,.98); border-top: 2px solid var(--teal-deep);
-  padding: 12px 0; box-shadow: var(--shadow);
+  padding: 8px 0; box-shadow: var(--shadow);
 }
-.urgency .wrap { display: flex; align-items: center; justify-content: center; gap: 14px 20px; flex-wrap: wrap }
-.urgency .ut { color: var(--ink-soft); font-size: .92rem; font-weight: 500 }
-.urgency .timer { font-family: var(--serif); color: var(--teal-deep); font-weight: 800; font-size: 1.3rem; letter-spacing: .04em; font-variant-numeric: tabular-nums }
-.urgency .btn { padding: 11px 22px; font-size: .92rem }
+.urgency .wrap { display: flex; align-items: center; justify-content: center; gap: 8px 16px; flex-wrap: wrap }
+.urgency .ut { color: var(--ink-soft); font-size: .88rem; font-weight: 500 }
+.urgency .timer { font-family: var(--serif); color: var(--teal-deep); font-weight: 800; font-size: 1.15rem; letter-spacing: .04em; font-variant-numeric: tabular-nums }
+.urgency .btn { padding: 8px 20px; font-size: .88rem }
 
 /* ---------- Logo ---------- */
 .logo-chip.text-logo { flex-direction: column; line-height: 1; min-width: 142px; color: var(--ink) }
 .logo-main { font-family: var(--serif); font-size: 1.35rem; font-weight: 800 }
 .logo-sub { font-size: .76rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--teal-deep); margin-top: 4px }
 .logo-chip.logo-image { background: transparent; border-radius: 0; padding: 0; align-items: center }
-.logo-chip.logo-image img { height: 96px; width: auto; max-width: min(320px, 54vw); object-fit: contain }
+.logo-chip.logo-image img { height: 68px; width: auto; max-width: min(320px, 54vw); object-fit: contain }
 
 /* ---------- Booking Modal ---------- */
 .modal-backdrop {
@@ -731,10 +732,10 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   .stats { gap: 10px }
 
   /* Logo */
-  .logo-chip.logo-image img { height: 80px; max-width: min(280px, 50vw) }
+  .logo-chip.logo-image img { height: 60px; max-width: min(280px, 50vw) }
 
   /* Buttons */
-  .btn { padding: 14px 26px; font-size: .96rem }
+  .btn { padding: 10px 22px; font-size: .94rem }
 }
 
 /* ===== Mobile (≤640px) ===== */
@@ -780,7 +781,7 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
     flex: 0 0 auto;
   }
   .logo-chip.logo-image img { height: 56px; max-width: min(126px, 38vw) }
-.book .btn { font-size: 0.78rem; padding: 10px 12px; margin-top: 6px }
+.book .btn { font-size: 0.78rem; padding: 8px 12px; margin-top: 4px }
   /* Hero — mobile: title → video → description */
   .hero-inner { display: flex; flex-direction: column; gap: 20px }
   .hero-copy { display: contents }
@@ -936,12 +937,12 @@ footer .disclaimer { color: var(--ink-soft); font-size: .78rem; max-width: 70ch;
   .faq-list { grid-template-columns: 1fr }
 
   /* Buttons — neat mobile sizing */
-  .btn { padding: 13px 22px; font-size: .92rem; gap: 8px }
-  .btn-ghost { padding: 12px 20px }
-  .hero-actions { flex-direction: column; align-items: center; gap: 10px; width: 100% }
-  .hero-actions .btn { width: min(320px, 100%); justify-content: center; padding: 14px 24px; font-size: .95rem }
-  .book .btn { width: 100%; justify-content: center }
-  .urgency .btn { padding: 10px 18px; font-size: .85rem }
+  .btn { padding: 10px 20px; font-size: .9rem; gap: 8px }
+  .btn-ghost { padding: 9px 18px }
+  .hero-actions { flex-direction: column; align-items: center; gap: 8px; width: 100% }
+  .hero-actions .btn { width: min(320px, 100%); justify-content: center; padding: 11px 22px; font-size: .92rem }
+  .book .btn { align-self: center; max-width: 100%; justify-content: center }
+  .urgency .btn { padding: 8px 16px; font-size: .84rem }
   .final .btn { width: min(300px, 100%); justify-content: center }
   .topbar .header-actions {
     display: flex;
