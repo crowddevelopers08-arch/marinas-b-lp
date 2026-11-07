@@ -20,7 +20,7 @@ export default function HeroSection() {
         <div className="hero-media">
           <div className="hero-video-wrap">
             <video
-              src="/marinias1_squished.mp4"
+              src="https://res.cloudinary.com/dxntva1vn/video/upload/v1794027019/video-1_clrf7v.mp4"
               controls
               playsInline
               preload="metadata"

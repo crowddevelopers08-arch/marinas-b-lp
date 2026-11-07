@@ -9,7 +9,7 @@ export default function Header() {
     <header className="topbar">
       <div className="wrap">
         <div className="logo-chip logo-image">
-          <Image src="/Marina-logo.png" alt="Marina's Clinic" width={300} height={200} priority />
+          <Image src="https://res.cloudinary.com/dxntva1vn/image/upload/v1794027007/Marina-logo_tjcywr.png" alt="Marina's Clinic" width={300} height={200} priority />
         </div>
         <span className="clinic-tag">Bariatric &amp; Metabolic Surgery</span>
         <div className="header-actions">

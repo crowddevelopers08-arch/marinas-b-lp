@@ -8,7 +8,7 @@ export default function Footer() {
     <footer>
       <div className="wrap footer-grid max-sm:mb-8 sm:mb-12">
         <div className="footer-main">
-          <Image className="footer-logo" src="/Marina-logo.png" alt="Marina's Clinic" width={300} height={200} />
+          <Image className="footer-logo" src="https://res.cloudinary.com/dxntva1vn/image/upload/v1794027007/Marina-logo_tjcywr.png" alt="Marina's Clinic" width={300} height={200} />
 
           <div className="f-name">Dr.Preethi Mrinalini</div>
           <div className="f-role">Bariatric &amp; Metabolic Surgeon</div>
