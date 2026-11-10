@@ -6,7 +6,10 @@ import { prisma } from '@/lib/prisma';
 const DATA_DIR = path.join(process.cwd(), 'data');
 const FILE_PATH = path.join(DATA_DIR, 'submissions.csv');
 const DEFAULT_FORM_NAME = 'Marina Bariatrics';
-const HEADERS = ['Timestamp', 'Source', 'Name', 'Phone', 'Condition', 'URL', 'TeleCRM', 'FormName'];
+// Must match the Apps Script: formName "BC-VSL-Lead" -> BC-VSL-Leads sheet.
+const BC_GAS_FORM_NAME = 'BC-VSL-Lead';
+const BC_GAS_SOURCE = 'BC-VSL-Forms';
+const HEADERS =['Timestamp', 'Source', 'Name', 'Phone', 'Condition', 'URL', 'TeleCRM', 'FormName'];
 
 export const runtime = 'nodejs';
 
@@ -73,8 +76,12 @@ function appendLocalRow(row: string[]) {
 }
 
 async function pushToGAS(body: SubmissionBody, timestamp: string, telecrmStatus: string) {
-  const url = process.env.NEXT_PUBLIC_GAS_URL;
-  if (!url) return null;
+  // .env may use either name; GOOGLE_APPS_SCRIPT_URL is the one documented in Code.gs.
+  const url = process.env.GOOGLE_APPS_SCRIPT_URL || process.env.NEXT_PUBLIC_GAS_URL;
+  if (!url) {
+    console.warn('Google Sheet sync skipped: set GOOGLE_APPS_SCRIPT_URL in .env');
+    return null;
+  }
 
   const row = [
     timestamp,
@@ -87,13 +94,26 @@ async function pushToGAS(body: SubmissionBody, timestamp: string, telecrmStatus:
     body.formName,
   ];
 
+  // Main Bariatric landing form -> Apps Script routes "BC-VSL-Lead" to the BC-VSL-Leads sheet
+  // (and Submissions). Other forms (e.g. Client Feedback) are sent exactly as before.
+  const isBcLead = body.formName === DEFAULT_FORM_NAME;
+  const [firstName = '', ...restName] = body.name.split(/\s+/).filter(Boolean);
+
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({
+      ...(isBcLead
+        ? {
+            firstName,
+            lastName: restName.join(' '),
+            symptomType: body.concern,
+            note: `Stage: ${body.source}`,
+          }
+        : {}),
       timestamp,
-      formName: body.formName,
-      source: body.source,
+      formName: isBcLead ? BC_GAS_FORM_NAME : body.formName,
+      source: isBcLead ? BC_GAS_SOURCE : body.source,
       name: body.name,
       phone: body.phone,
       concern: body.concern,

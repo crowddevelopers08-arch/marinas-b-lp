@@ -10,7 +10,7 @@ export default function SupportNavbar() {
         {/* Logo */}
         <a href="/" className="flex items-center no-underline">
           <Image
-            src="/Marina-logo.png"
+            src="https://res.cloudinary.com/dxntva1vn/image/upload/v1794027007/Marina-logo_tjcywr.png"
             alt="Marina's Clinic"
             width={160}
             height={82}

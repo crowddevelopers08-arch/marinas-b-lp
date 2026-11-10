@@ -15,6 +15,10 @@ const concerns = [
 
 const FORM_NAME = "Marina Bariatrics";
 
+// Razorpay is ON HOLD. All Razorpay code below is kept as-is.
+// Set to true to re-enable the payment step (lead is still captured first).
+const PAYMENT_ENABLED = false;
+
 type Status = "idle" | "loading" | "error";
 
 declare global {
@@ -79,21 +83,36 @@ export default function BookingModal() {
   const submitLead = async () => {
     if (leadSubmittedRef.current) return;
 
-    const res = await fetch("/api/submissions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        source: "Consultation Modal",
-        formName: FORM_NAME,
-        name: form.name,
-        phone: form.phone,
-        concern: form.concern,
-        pageUrl: window.location.href,
-      }),
+    const payload = JSON.stringify({
+      source: "Consultation Modal",
+      formName: FORM_NAME,
+      name: form.name,
+      phone: form.phone,
+      concern: form.concern,
+      pageUrl: window.location.href,
     });
 
-    if (!res.ok) throw new Error("Lead submission failed");
-    leadSubmittedRef.current = true;
+    // Try up to 3 times so a network blip never loses a lead.
+    let lastError: unknown = new Error("Lead submission failed");
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const res = await fetch("/api/submissions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload,
+          keepalive: true,
+        });
+        if (res.ok) {
+          leadSubmittedRef.current = true;
+          return;
+        }
+        lastError = new Error(`Lead submission failed (${res.status})`);
+      } catch (err) {
+        lastError = err;
+      }
+      await new Promise((r) => setTimeout(r, 600 * (attempt + 1)));
+    }
+    throw lastError;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -103,6 +122,12 @@ export default function BookingModal() {
     try {
       // Capture the lead before payment starts so checkout issues do not lose it.
       await submitLead();
+
+      // Payment on hold: lead is saved, go straight to thank-you.
+      if (!PAYMENT_ENABLED) {
+        router.push("/thank-you");
+        return;
+      }
 
       // 1. Load Razorpay script
       const loaded = await loadRazorpayScript();
@@ -201,9 +226,15 @@ export default function BookingModal() {
               {concerns.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
-          {status === "error" && <p className="modal-error">Payment failed. Please try again.</p>}
+          {status === "error" && (
+            <p className="modal-error">
+              {PAYMENT_ENABLED ? "Payment failed. Please try again." : "Something went wrong. Please try again."}
+            </p>
+          )}
           <button type="submit" className="btn modal-submit" disabled={status === "loading"}>
-            {status === "loading" ? "Opening Payment…" : "Proceed to Pay Rs.1500"}
+            {PAYMENT_ENABLED
+              ? status === "loading" ? "Opening Payment…" : "Proceed to Pay Rs.1500"
+              : status === "loading" ? "Submitting…" : "Book My Consultation"}
           </button>
         </form>
       </div>
