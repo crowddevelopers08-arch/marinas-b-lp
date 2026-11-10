@@ -3,7 +3,8 @@
 //   - "Bariatric leads" form  -> "BC-leads" sheet  (original, unchanged)
 //   - "BC-VSL-Lead"     form  -> "BC-VSL-Leads" sheet  (unchanged)
 //   - "HC-VSL-Leads"    form  -> "HC-VSL-Leads" sheet  (NEW)
-// Every lead is ALSO written to the original "Submissions" sheet, exactly as before.
+// Every lead is ALSO written to the original "Submissions" sheet, EXCEPT the BC-VSL and HC-VSL forms,
+// which go ONLY to their own tab.
 // Deploy as Web app (Execute as: Me, Who has access: Anyone) and put the /exec URL in
 // GOOGLE_APPS_SCRIPT_URL in .env.
 
@@ -156,8 +157,8 @@ function doPost(e) {
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
-      // BC-VSL form goes ONLY to its own tab; every other form still also goes to Submissions.
-      if (!isBcVsl) {
+      // BC-VSL and HC-VSL forms go ONLY to their own tab; every other form still also goes to Submissions.
+      if (!isBcVsl && !isHcVsl) {
         getSheet(SUBMISSIONS_SHEET, SUBMISSIONS_HEADERS).appendRow(submissionsRow);
       }
       if (isHcVsl) {
